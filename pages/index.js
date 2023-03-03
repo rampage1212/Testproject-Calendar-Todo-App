@@ -50,7 +50,7 @@ function HomePage() {
   };
 
   return (
-    <div className="container w-[700px] h-[700px] mx-auto mt-4 drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] bg-bgcolorColor p-4 text-contentColor">
+    <div className="container w-[700px] h-[700px] mx-auto my-8 drop-shadow-[0px_0px_17px_rgba(0,255,255,1)] bg-bgcolorColor p-4 text-contentColor rounded-lg">
       <h1 className="text-2xl font-bold mb-4 text-headerColor">
         Calendar Todo App
       </h1>
@@ -79,7 +79,10 @@ function HomePage() {
           onSubmit={(event) => {
             event.preventDefault();
             const title = event.target.elements.title.value;
-            const services = event.target.elements.services.value;
+            let services = "";
+            if (event.target.elements.services.value)
+              services = event.target.elements.services.value;
+            else services = event.target.elements.selectList.value;
             const file = imgTemp;
             handleTodoAdd(title, services, file);
             setImgTemp("");
@@ -93,13 +96,23 @@ function HomePage() {
             placeholder="Add a New Event"
             required
           />
-          <input
-            type="text"
-            name="services"
-            className="flex-1 border-gray-300 rounded-md p-1 px-2"
-            placeholder="Add Services"
-            required
-          />
+          <div className="flex gap-2 w-full ">
+            <input
+              type="text"
+              name="services"
+              className="flex-1 border-gray-300 rounded-md p-1 px-2 w-[50%]"
+              placeholder="Add Services"
+            />
+            <select
+              name="selectList"
+              id="selectList"
+              className="border-gray-300 rounded-md w-[50%]"
+            >
+              <option value="General Cleaning">General Cleaning</option>
+              <option value="Wash Clothes">Wash Clothes</option>
+              <option value="Maintenance">Maintenance</option>
+            </select>
+          </div>
           <input
             type="file"
             name="file"
@@ -111,7 +124,10 @@ function HomePage() {
             {imgTemp && (
               <img src={imgTemp} id="output" width="200" alt="Image" />
             )}
-            <button type="submit" className="w-full">
+            <button
+              type="submit"
+              className="w-full text-white text-xl font-serif"
+            >
               Add
             </button>
           </div>
